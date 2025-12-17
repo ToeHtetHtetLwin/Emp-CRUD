@@ -1,0 +1,74 @@
+{% extends "employee/components/base.html" %}
+
+{% block title %}Employee List{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-start gap-2">
+    <div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">Total Employee</h5>
+    <p class="card-text">{{total_employee}}</p>
+  </div>
+</div>
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">Total Department</h5>
+    <p class="card-text">{{total_department}}</p>
+  </div>
+</div>
+</div>
+
+
+<a href="{% url 'employee_create' %}" class="btn btn-primary mt-3">+ Add Employee</a>
+
+<h2 class="mb-4">Employee List</h2>
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Email</th>
+         <th>
+        Department
+        <form method="get">
+          <select name="department"
+                  class="form-select form-select-sm mt-1"
+                  onchange="this.form.submit()">
+            <option value="">All</option>
+
+            {% for dept in department %}
+              <option value="{{ dept.id }}"
+                {% if request.GET.department == dept.id|stringformat:"s" %}
+                  selected
+                {% endif %}
+              >
+                {{ dept.name }}
+              </option>
+            {% endfor %}
+          </select>
+        </form>
+      </th>
+      <th>Position</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {% for emp in employee %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ emp.name }}</td>
+            <td>{{ emp.email }}</td>
+            <td>{{emp.department}}</td>
+            <td>{{ emp.position }}</td>
+            
+            <td>
+               <a href="{% url 'employee_update' emp.id %}" class="btn btn-warning btn-sm">Edit</a>
+      <a href="{% url 'employee_delete' emp.id %}" class="btn btn-danger btn-sm">Delete</a>
+
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

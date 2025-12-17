@@ -1,0 +1,25 @@
+{% extends "employee/components/base.html" %} 
+{% block content %}
+
+<h2 class="mb-4">Department List</h2>
+<table class="table table-bordered table-striped">
+  <thead class="table-dark">
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+
+      <th>Description</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for dept in department %}
+    <tr>
+      <td>{{dept.id}}</td>
+      <td>{{ dept.name }}</td>
+      <td>{{ dept.description }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
